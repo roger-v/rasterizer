@@ -45,6 +45,18 @@ float magnitude(Vector3 v) {
 	return sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2));
 }
 
+Vector3 Vector3::operator+ (Vector3 v) {
+	return Vector3(this->x + v.x, this->y + v.y, this->z + v.z);
+}
+
+Vector3 Vector3::operator- (Vector3 v) {
+	return Vector3(this->x - v.x, this->y - v.y, this->z - v.z);
+}
+
+Vector3 Vector3::operator/ (float n) {
+	return Vector3(this->x / n, this->y / n, this->z / n);
+}
+
 Vector3 operator* (const Vector3 & v, float n) {
 	return Vector3(v.x*n, v.y*n, v.z*n);
 }
@@ -59,6 +71,14 @@ Vector3 operator+ (const Vector3 & v, float n) {
 
 Vector3 operator+ (float n, const Vector3 & v) {
 	return Vector3(v.x + n, v.y + n, v.z + n);
+}
+
+std::string Vector3::toString() {
+	return '[' + std::to_string(x) + ',' + std::to_string(y) + ',' + std::to_string(z) + ']';
+}
+
+std::string vertex::toString() {
+	return '[' + std::to_string(x) + ',' + std::to_string(y) + ',' + std::to_string(z) + ']';
 }
 
 float dotProduct(Vector3 v1, Vector3 v2) {

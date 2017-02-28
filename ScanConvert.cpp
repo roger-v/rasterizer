@@ -14,44 +14,19 @@ using namespace std;
 #define PHONG 3
 #define GOURAUD 2
 #define FLAT 1
-int interpolation = PHONG;
-
-/******************************************************************
-Notes:
-Image size is 400 by 400 by default.  You may adjust this if
-you want to.
-You can assume the window will NOT be resized.
-Call clearFramebuffer to clear the entire framebuffer.
-Call setFramebuffer to set a pixel.  This should be the only
-routine you use to set the color (other than clearing the
-entire framebuffer).  drawit() will cause the current
-framebuffer to be displayed.
-As is, your scan conversion should probably be called from
-within the display function.  There is a very short sample
-of code there now.
-You may add code to any of the subroutines here,  You probably
-want to leave the drawit, clearFramebuffer, and
-setFramebuffer commands alone, though.
-*****************************************************************/
+int interpolation = GOURAUD;
 
 float framebuffer[ImageH][ImageW][3];
-
-
-
 
 vector<vertex> vertices;
 vector<face> faces;
 
-
-
-// Draws the scene
 void drawit(void)
 {
 	glDrawPixels(ImageW, ImageH, GL_RGB, GL_FLOAT, framebuffer);
 	glFlush();
 }
 
-// Clears framebuffer to black
 void clearFramebuffer()
 {
 	int i, j;
@@ -65,12 +40,8 @@ void clearFramebuffer()
 	}
 }
 
-// Sets pixel x,y to the color RGB
-// I've made a small change to this function to make the pixels match
-// those returned by the glutMouseFunc exactly - Scott Schaefer #
 void setFramebuffer(int x, int y, float R, float G, float B)
 {
-	// changes the origin from the lower-left corner to the upper-left corner
 	y = ImageH - 1 - y;
 	if (R <= 1.0)
 		if (R >= 0.0)
@@ -103,8 +74,6 @@ void display(void)
 void init(void)
 {
 	clearFramebuffer();
-
-	cout << "now drawing... " << endl;
 	for (int i = 0; i < faces.size(); i++) {
 		face f = faces[i];
 		float * color = totalIllumination(f.normal);
@@ -130,15 +99,12 @@ void init(void)
 void keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case '1':
-		cout << "Using flat shading" << endl;
 		interpolation = FLAT;
 		break;
 	case '2':
-		cout << "Using gouraud shading" << endl;
 		interpolation = GOURAUD;
 		break;
 	case '3':
-		cout << "Using phong shading" << endl;
 		interpolation = PHONG;
 		break;
 	default:
@@ -151,15 +117,17 @@ void keyboard(unsigned char key, int x, int y) {
 int main(int argc, char** argv)
 {
 	if (!argv[1]) {
-		cout << "no argument detected, using cube2" << endl;
+		cout << "no argument detected, using cow!" << endl;
 	}
 	else cout << "file is:\n" << argv[1] << endl;
-	string cube2 = "C:\\Users\\PASTACORK\\Documents\\Visual Studio 2015\\Projects\\PolygonRasterization\\Debug\\cube2.obj";
-	string cow = "C:\\Users\\PASTACORK\\Documents\\Visual Studio 2015\\Projects\\PolygonRasterization\\Debug\\cow.obj";
-	string sphere = "C:\\Users\\PASTACORK\\Documents\\Visual Studio 2015\\Projects\\PolygonRasterization\\Debug\\sphere.obj";
+	string cow = "cow.obj";
 	ifstream inFile;
 	if (argv[1]) inFile.open(argv[1]);
 	else inFile.open(cow);
+	if (!inFile.is_open()) {
+		cout << "The file did not open.\n";
+		return 0;
+	}
 	string line;
 
 	while (getline(inFile, line))

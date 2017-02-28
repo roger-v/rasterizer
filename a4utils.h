@@ -15,21 +15,13 @@ public:
 
 	Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
 
-	Vector3 operator+ (Vector3 v) {
-		return Vector3(this->x + v.x, this->y + v.y, this->z + v.z);
-	}
+	Vector3 operator+ (Vector3 v);
 
-	Vector3 operator- (Vector3 v) {
-		return Vector3(this->x - v.x, this->y - v.y, this->z - v.z);
-	}
+	Vector3 operator- (Vector3 v);
 
-	Vector3 operator/ (float n) {
-		return Vector3(this->x / n, this->y / n, this->z / n);
-	}
+	Vector3 operator/ (float n);
 
-	std::string toString() {
-		return '[' + std::to_string(x) + ',' + std::to_string(y) + ',' + std::to_string(z) + ']';
-	}
+	std::string toString();
 };
 
 float magnitude(Vector3 v);
@@ -56,9 +48,7 @@ public:
 	float y;
 	float z;
 	Vector3 normal;
-	std::string toString() {
-		return '[' + std::to_string(x) + ',' + std::to_string(y) + ',' + std::to_string(z) + ']';
-	}
+	std::string toString();
 	float F[3];
 };
 
